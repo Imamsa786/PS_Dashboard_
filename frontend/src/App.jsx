@@ -1,20 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AdminLogin from './pages/Admin/Login';
 import AdminLayout from './pages/Admin/Layout';
 import ManagePS from './pages/Admin/ManagePS';
 import ViewSubmissions from './pages/Admin/ViewSubmissions';
 import Settings from './pages/Admin/Settings';
-
-const ProtectedRoute = ({ children }) => {
-  const userInfo = localStorage.getItem('userInfo');
-  return userInfo ? children : <Navigate to="/admin/login" />;
-};
-
-function App() {
-  return (
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
   const userInfo = localStorage.getItem('userInfo');
@@ -41,8 +32,6 @@ function App() {
         </Route>
       </Routes>
     </Router>
-  );
-}
   );
 }
 
