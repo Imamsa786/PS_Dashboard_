@@ -50,11 +50,13 @@ const startServer = async () => {
       throw new Error('MONGO_URI is not defined in environment variables');
     }
 
-    // Log masked URI for debugging
-    const maskedUri = mongoUri.replace(/:([^@]+)@/, ':****@');
-    console.log(`Attempting to connect to MongoDB: ${maskedUri}`);
+    // Log masked URI for debugging (masking password while keeping user and host)
+    const maskedUri = mongoUri.replace(/\/\/(.*):(.*)@/, (match, user, pass) => `//${user}:****@`);
+    console.log(`📡 Connection Attempt: ${maskedUri}`);
 
-    const conn = await mongoose.connect(mongoUri);
+    const conn = await mongoose.connect(mongoUri, {
+      serverSelectionTimeoutMS: 5000, // Faster timeout for debugging
+    });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     
     // Seed Admin
@@ -65,9 +67,13 @@ const startServer = async () => {
       console.log(`🚀 Server running on port ${PORT}`);
     });
   } catch (error) {
-    console.error(`❌ Database Connection Error: ${error.message}`);
-    // Don't exit immediately in some environments, but for Render/Production it's often safer
-    setTimeout(() => process.exit(1), 5000); 
+    console.error('❌ DATABASE CONNECTION ERROR DETAILS:');
+    console.error(`- Message: ${error.message}`);
+    console.error(`- Stack: ${error.stack}`);
+    
+    // Keep alive long enough for logs to flush
+    console.log('--- Server will exit in 10 seconds ---');
+    setTimeout(() => process.exit(1), 10000); 
   }
 };
 
