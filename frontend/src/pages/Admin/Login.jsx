@@ -23,6 +23,7 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
+      console.log('API URL being used:', api.defaults.baseURL);
       const { data } = await api.post('/auth/login', { username, password });
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate('/admin/dashboard');
