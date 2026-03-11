@@ -27,7 +27,11 @@ const AdminLogin = () => {
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate('/admin/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      if (!err.response) {
+        setError('Network Error: Cannot connect to server. Check VITE_API_URL.');
+      } else {
+        setError(err.response.data?.message || 'Login failed');
+      }
     } finally {
       setLoading(false);
     }
