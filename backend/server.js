@@ -29,7 +29,9 @@ const seedAdmin = async () => {
         username: 'admin',
         password: 'password123',
       });
-      console.log('Default admin seeded: username: admin, password: password123');
+      console.log('✅ Default admin seeded: username: admin, password: password123');
+    } else {
+      console.log('ℹ️ Admin user already exists in database');
     }
   } catch (error) {
     console.error('Error seeding admin:', error);

@@ -17,6 +17,7 @@ const generateToken = (id) => {
 // @access  Public
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
+  console.log(`Login attempt for username: ${username}`);
   
   try {
     const admin = await Admin.findOne({ username });
