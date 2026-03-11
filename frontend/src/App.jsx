@@ -14,6 +14,15 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   return (
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
+const ProtectedRoute = ({ children }) => {
+  const userInfo = localStorage.getItem('userInfo');
+  return userInfo ? children : <Navigate to="/admin/login" />;
+};
+
+function App() {
+  return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -32,6 +41,8 @@ function App() {
         </Route>
       </Routes>
     </Router>
+  );
+}
   );
 }
 
